@@ -20,14 +20,7 @@ var scanCmd = &cobra.Command{
 		if len(args) > 0 {
 			dbFile := initDB()
 
-			var path string
-			if filepath.IsAbs(args[0]) {
-				path = args[0]
-			} else {
-				wd, err := os.Getwd()
-				check(err)
-				path = fmt.Sprintf("%s/%s", wd, args[0])
-			}
+			path := getAbsPath(args[0])
 
 			total := scan(path, dbFile)
 
@@ -89,6 +82,16 @@ func scan(path string, dbFile string) int {
 	})
 
 	return total
+}
+
+func getAbsPath(input string) string {
+	if filepath.IsAbs(input) {
+		return input
+	} else {
+		wd, err := os.Getwd()
+		check(err)
+		return fmt.Sprintf("%s/%s", wd, input)
+	}
 }
 
 func contains(slice []string, val string) bool {
