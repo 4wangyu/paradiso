@@ -1,8 +1,12 @@
 package cmd
 
 import (
+	"database/sql"
 	"fmt"
+	"os"
+	"time"
 
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/spf13/cobra"
 )
 
@@ -12,20 +16,29 @@ var scanCmd = &cobra.Command{
 	Short: "Scans all media under specified path.",
 	Long:  `Scans all media under specified path.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("scan called")
+		initDB()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(scanCmd)
+}
 
-	// Here you will define your flags and configuration settings.
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// scanCmd.PersistentFlags().String("foo", "", "A help for foo")
+func initDB() {
+	f, err := os.Create(fmt.Sprintf("media.%s.db", time.Now().Format("20060102150405")))
+	check(err)
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// scanCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	db, err := sql.Open("sqlite3", f.Name())
+	check(err)
+
+	_, err = db.Exec(`create table media (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, path TEXT NOT NULL);`)
+	check(err)
+
+	db.Close()
 }
