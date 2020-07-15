@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -17,6 +18,16 @@ var scanCmd = &cobra.Command{
 	Long:  `Scans all media under specified path.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		initDB()
+
+		if len(args) > 0 {
+			if filepath.IsAbs(args[0]) {
+				iterate(args[0])
+			} else {
+				wd, err := os.Getwd()
+				check(err)
+				iterate(fmt.Sprintf("%s/%s", wd, args[0]))
+			}
+		}
 	},
 }
 
@@ -41,4 +52,17 @@ func initDB() {
 	check(err)
 
 	db.Close()
+}
+
+func iterate(path string) {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		fmt.Printf("Path %s does not exist.\n", path)
+		os.Exit(1)
+	}
+
+	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+		check(err)
+		fmt.Printf("Path: %s\nFile Name: %s\n", path, info.Name())
+		return nil
+	})
 }
