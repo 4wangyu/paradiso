@@ -17,9 +17,9 @@ var scanCmd = &cobra.Command{
 	Short: "Scans all media under specified path.",
 	Long:  `Scans all media under specified path.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		dbFile := initDB()
-
 		if len(args) > 0 {
+			dbFile := initDB()
+
 			if filepath.IsAbs(args[0]) {
 				scan(args[0], dbFile)
 			} else {
@@ -27,6 +27,10 @@ var scanCmd = &cobra.Command{
 				check(err)
 				scan(fmt.Sprintf("%s/%s", wd, args[0]), dbFile)
 			}
+
+			fmt.Printf("Your media is saved in %[1]s.\nRun `paradiso serv %[1]s` to open it.\n", dbFile)
+		} else {
+			fmt.Println("Please specify path for your media.")
 		}
 	},
 }
