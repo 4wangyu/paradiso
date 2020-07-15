@@ -20,15 +20,18 @@ var scanCmd = &cobra.Command{
 		if len(args) > 0 {
 			dbFile := initDB()
 
+			var path string
 			if filepath.IsAbs(args[0]) {
-				scan(args[0], dbFile)
+				path = args[0]
 			} else {
 				wd, err := os.Getwd()
 				check(err)
-				scan(fmt.Sprintf("%s/%s", wd, args[0]), dbFile)
+				path = fmt.Sprintf("%s/%s", wd, args[0])
 			}
 
-			fmt.Printf("Your media is saved in %[1]s.\nRun `paradiso serv %[1]s` to open it.\n", dbFile)
+			total := scan(path, dbFile)
+
+			fmt.Printf("Amount of scanned files: %[2]d.\nSaved in %[1]s.\nRun `paradiso serv %[1]s` to serve it.\n", dbFile, total)
 		} else {
 			fmt.Println("Please specify path for your media.")
 		}
@@ -54,7 +57,7 @@ func initDB() string {
 	return f.Name()
 }
 
-func scan(path string, dbFile string) {
+func scan(path string, dbFile string) int {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		fmt.Printf("Path %s does not exist.\n", path)
 		os.Exit(1)
@@ -64,6 +67,7 @@ func scan(path string, dbFile string) {
 	check(err)
 	defer db.Close()
 
+	total := 0
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		check(err)
 
@@ -78,10 +82,13 @@ func scan(path string, dbFile string) {
 
 			_, err = stmt.Exec(path, info.Name(), info.ModTime().Unix())
 			check(err)
+			total++
 		}
 
 		return nil
 	})
+
+	return total
 }
 
 func contains(slice []string, val string) bool {
