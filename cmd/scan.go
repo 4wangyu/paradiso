@@ -62,7 +62,25 @@ func iterate(path string) {
 
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		check(err)
-		fmt.Printf("Path: %s\nFile Name: %s\n", path, info.Name())
+
+		if info.IsDir() {
+			return nil
+		}
+
+		extension := filepath.Ext(path)
+		if contains([]string{".mp4", ".mkv"}, extension) {
+			fmt.Printf("Path: %s\nFile Name: %s\n", path, info.Name())
+		}
+
 		return nil
 	})
+}
+
+func contains(slice []string, val string) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }
