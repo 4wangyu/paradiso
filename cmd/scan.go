@@ -87,11 +87,10 @@ func scan(path string, dbFile string) int {
 func getAbsPath(input string) string {
 	if filepath.IsAbs(input) {
 		return input
-	} else {
-		wd, err := os.Getwd()
-		check(err)
-		return fmt.Sprintf("%s/%s", wd, input)
 	}
+	wd, err := os.Getwd()
+	check(err)
+	return fmt.Sprintf("%s/%s", wd, input)
 }
 
 func contains(slice []string, val string) bool {
