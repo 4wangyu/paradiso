@@ -6,7 +6,7 @@ import { getMovieRows } from '../getMovie';
 import { fetchHorrorMovies } from '../store/actions/index';
 
 class HorrorMovies extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchHorrorMovies();
   }
 

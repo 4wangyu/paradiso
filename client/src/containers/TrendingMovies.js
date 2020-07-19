@@ -6,7 +6,7 @@ import { fetchTrending } from '../store/actions/index';
 import { getMovieRows } from '../getMovie';
 
 class TrendingMovies extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchTrending();
   }
 

@@ -6,7 +6,7 @@ import { getMovieRows } from '../getMovie';
 import { fetchNetflixOriginals } from '../store/actions/index';
 
 class NetflixOriginals extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchNetflixOriginals();
   }
 

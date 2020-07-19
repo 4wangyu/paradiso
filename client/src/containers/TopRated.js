@@ -6,7 +6,7 @@ import { fetchTopRated } from '../store/actions/index';
 import { getMovieRows } from '../getMovie';
 
 class TopRated extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchTopRated();
   }
 

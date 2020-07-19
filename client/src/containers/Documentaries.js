@@ -6,7 +6,7 @@ import { getMovieRows } from '../getMovie';
 import { fetchDocumentaries } from '../store/actions/index';
 
 class Documentaries extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchDocumentaries();
   }
 
