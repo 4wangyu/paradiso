@@ -1,27 +1,17 @@
-import React, { Component } from 'react';
 import axios from 'axios';
-import Header from '../components/Header';
+import React, { Component } from 'react';
 import Footer from '../components/Footer';
-
-import TrendingMovies from './TrendingMovies';
-import NetflixOriginals from './NetflixOriginals';
-import TopRated from './TopRated';
-import ActionMovies from './ActionMovies';
-import ComedyMovies from './ComedyMovies';
-import Documentaries from './Documentaries';
-
+import Header from '../components/Header';
 
 class MainContent extends Component {
-
   state = {
     /** Will hold our chosen movie to display on the header */
-    selectedMovie: {}
+    selectedMovie: {},
   };
 
   componentDidMount = () => {
     this.getMovie();
   };
-
 
   getMovie = () => {
     /** Movie Id for the Narcos series  */
@@ -30,11 +20,11 @@ class MainContent extends Component {
     const url = `https://api.themoviedb.org/3/tv/${movieId}?api_key=${process.env.API_KEY}`;
     axios
       .get(url)
-      .then(res => {
+      .then((res) => {
         const movieData = res.data;
         this.setState({ selectedMovie: movieData });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -43,18 +33,11 @@ class MainContent extends Component {
     return (
       <div className="container">
         <Header movie={this.state.selectedMovie} />
-        <div className="movieShowcase">
-          <NetflixOriginals />
-          <TrendingMovies />
-          <TopRated />
-          <ActionMovies />
-          <ComedyMovies />
-          <Documentaries />
-        </div>
+        <div className="movieShowcase"></div>
         <Footer />
       </div>
     );
   }
 }
 
-export default MainContent; 
+export default MainContent;
