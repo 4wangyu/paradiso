@@ -8,14 +8,12 @@ import Navbar from './Navbar';
 
 const AppRouter = () => (
   <BrowserRouter>
-    <>
-      <Navbar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/search" component={Search} />
-        <Route component={NotFound} />
-      </Switch>
-    </>
+    <Navbar />
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Route path="/search" component={Search} />
+      <Route component={NotFound} />
+    </Switch>
   </BrowserRouter>
 );
 
