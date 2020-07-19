@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import axios from '../axios-movies';
-import DropdownContent from '../components/DropdownContent';
 import SearchLogo from '../static/images/search-icon.svg';
 
 class Navbar extends Component {
@@ -83,8 +82,6 @@ class Navbar extends Component {
               placeholder="Title, genres, people"
             />
           </div>
-
-          <DropdownContent />
         </ul>
       </nav>
     );
