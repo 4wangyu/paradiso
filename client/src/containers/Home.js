@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MainContent from './MainContent';
 
 class Home extends Component {
   state = {
@@ -16,9 +15,7 @@ class Home extends Component {
   render() {
     return (
       <>
-        <div className="main-content">
-          <MainContent />
-        </div>
+        <div className="main-content"></div>
       </>
     );
   }

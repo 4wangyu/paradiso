@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-class MainContent extends Component {
+class Videos extends Component {
   state = {
     /** Will hold our chosen movie to display on the header */
     selectedMovie: {},
@@ -34,10 +33,9 @@ class MainContent extends Component {
       <div className="container">
         <Header movie={this.state.selectedMovie} />
         <div className="movieShowcase"></div>
-        <Footer />
       </div>
     );
   }
 }
 
-export default MainContent;
+export default Videos;
