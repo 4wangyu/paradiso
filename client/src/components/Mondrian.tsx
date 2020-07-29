@@ -99,6 +99,9 @@ interface PropType {
   height: number;
 }
 
+/* 
+  Based on https://generativeartistry.com/tutorials/piet-mondrian/
+*/
 const Mondrian = ({ width, height }: PropType) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
