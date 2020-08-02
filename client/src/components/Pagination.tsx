@@ -1,21 +1,32 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Pagination = () => {
   return (
     <nav className="pagination">
-      <a>First</a>
-      <a>
+      <Link to="">First</Link>
+      <Link to="">
         <i className="fa fa-angle-left"></i>
-      </a>
-      <a className="number">1</a>
-      <a className="number">2</a>
-      <a className="number active">3</a>
-      <a className="number">4</a>
-      <a className="number">5</a>
-      <a>
+      </Link>
+      <Link to="" className="number">
+        1
+      </Link>
+      <Link to="" className="number">
+        2
+      </Link>
+      <Link to="" className="number active">
+        3
+      </Link>
+      <Link to="" className="number">
+        4
+      </Link>
+      <Link to="" className="number">
+        5
+      </Link>
+      <Link to="">
         <i className="fa fa-angle-right"></i>
-      </a>
-      <a>Last</a>
+      </Link>
+      <Link to="">Last</Link>
     </nav>
   );
 };
