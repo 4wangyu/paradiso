@@ -10,8 +10,8 @@ interface Square {
 
 let squares: Square[] = [];
 
-const colors = ["#D40920", "#1356A2", "#F7D842"];
-const white = "#fff";
+const colors = ["#b74b2e", "#051836", "#a1ac9a"];
+const white = "#7796b0";
 
 function splitSquaresWith(coordinates: Square) {
   const { x, y } = coordinates;
@@ -113,6 +113,7 @@ const Mondrian = ({ width, height }: PropType) => {
       canvas.width = width;
       canvas.height = height;
       context.lineWidth = 5;
+      context.strokeStyle = "#131112";
 
       const size = Math.max(width, height);
       const step = size / 7;
