@@ -6,6 +6,7 @@
   width: 100%;
   align-items: center;
   transition: 0.4s;
+  z-index: 1;
 
   &.offset {
     background: $background;

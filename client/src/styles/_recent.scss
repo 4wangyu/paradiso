@@ -4,9 +4,10 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    padding-bottom: 3rem;
 
     hr {
-      transform: translateY(1.8rem);
+      transform: translateY(1.4rem);
       width: 100%;
     }
 
@@ -16,7 +17,8 @@
       font-weight: 700;
       text-transform: uppercase;
       background: $background;
-      padding: 1rem;
+      padding: 0 1rem;
+      margin: 1.4rem 0;
     }
   }
 }

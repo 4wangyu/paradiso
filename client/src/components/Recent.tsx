@@ -1,4 +1,5 @@
 import React from "react";
+import Grid from "./Grid";
 
 const Recent = () => {
   return (
@@ -7,6 +8,8 @@ const Recent = () => {
         <hr />
         <h2>Recent</h2>
       </div>
+
+      <Grid></Grid>
     </div>
   );
 };
