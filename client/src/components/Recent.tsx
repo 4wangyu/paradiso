@@ -1,7 +1,14 @@
 import React from "react";
 
 const Recent = () => {
-  return <div style={{ height: "200px" }}></div>;
+  return (
+    <div className="recent">
+      <div className="heading">
+        <hr />
+        <h2>Recent</h2>
+      </div>
+    </div>
+  );
 };
 
 export default Recent;
