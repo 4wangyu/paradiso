@@ -1,11 +1,11 @@
 import React from "react";
-import Mondrian from "../components/Mondrian";
 import Recent from "../components/Recent";
+import Video from "../components/Video";
 
 const Home = () => {
   return (
     <div>
-      <Mondrian width={window.innerWidth} height={window.innerHeight} />
+      <Video width={window.innerWidth} height={window.innerHeight} split={5} />
       <Recent />
     </div>
   );

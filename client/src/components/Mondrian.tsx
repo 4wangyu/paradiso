@@ -94,15 +94,16 @@ function draw(context: CanvasRenderingContext2D) {
   }
 }
 
-interface PropType {
+export interface PropType {
   width: number;
   height: number;
+  split: number;
 }
 
 /* 
   Based on https://generativeartistry.com/tutorials/piet-mondrian/
 */
-const Mondrian = ({ width, height }: PropType) => {
+const Mondrian = ({ width, height, split }: PropType) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -116,7 +117,7 @@ const Mondrian = ({ width, height }: PropType) => {
       context.strokeStyle = "#131112";
 
       const size = Math.max(width, height);
-      const step = size / 5;
+      const step = size / split;
       squares = [];
       squares.push({
         x: 0,
