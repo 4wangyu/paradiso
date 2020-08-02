@@ -8,7 +8,7 @@ interface Square {
   color?: string;
 }
 
-const squares: Square[] = [];
+let squares: Square[] = [];
 
 const colors = ["#D40920", "#1356A2", "#F7D842"];
 const white = "#fff";
@@ -116,6 +116,7 @@ const Mondrian = ({ width, height }: PropType) => {
 
       const size = Math.max(width, height);
       const step = size / 7;
+      squares = [];
       squares.push({
         x: 0,
         y: 0,

@@ -13,15 +13,15 @@ const Navbar = () => {
 
   const navbarClass = classNames({
     navbar: true,
-    offset: offset > 40,
+    offset,
   });
 
   return (
-    <div className={navbarClass}>
+    <nav className={navbarClass}>
       <Link to="/">Paradiso</Link>
       <Link to="/videos">Videos</Link>
       <Link to="/search">Search</Link>
-    </div>
+    </nav>
   );
 };
 
