@@ -116,7 +116,7 @@ const Mondrian = ({ width, height }: PropType) => {
       context.strokeStyle = "#131112";
 
       const size = Math.max(width, height);
-      const step = size / 7;
+      const step = size / 5;
       squares = [];
       squares.push({
         x: 0,
