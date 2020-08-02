@@ -1,3 +1,35 @@
 .video {
-  // padding: 0.5rem;
+  position: relative;
+
+  .title {
+    @include overflow-hidden;
+    font-size: 1.6rem;
+    padding: 0px 1rem 0.5rem 0px;
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: column nowrap;
+    background-color: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    padding: 1rem;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+
+    &:hover h3 {
+      opacity: 1;
+    }
+
+    h3 {
+      opacity: 0;
+      transition: opacity 250ms ease-in-out 0s;
+      margin: 0;
+      font-size: 2.5rem;
+      text-transform: uppercase;
+    }
+  }
 }
