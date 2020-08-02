@@ -1,0 +1,34 @@
+.pagination {
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding: 4rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px auto;
+  width: 100%;
+  max-width: 68rem;
+
+  a {
+    cursor: pointer;
+    width: 5rem;
+    text-align: center;
+
+    &.number {
+      border-radius: 50%;
+      line-height: 5rem;
+
+      &:hover:not(.active) {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      &.active {
+        border: 1px solid white;
+      }
+    }
+  }
+
+  i {
+    font-size: 3rem;
+  }
+}
