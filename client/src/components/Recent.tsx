@@ -1,7 +1,7 @@
 import React from "react";
 
 const Recent = () => {
-  return <div></div>;
+  return <div style={{ height: "200px" }}></div>;
 };
 
 export default Recent;

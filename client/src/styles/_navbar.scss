@@ -1,0 +1,35 @@
+.navbar {
+  position: fixed;
+  padding: 0px 2rem;
+  height: 6.2rem;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  transition: 0.4s;
+
+  &.offset {
+    background: $background;
+  }
+
+  a {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $accent;
+
+    &:hover {
+      border-bottom: 3px solid $primary;
+    }
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &:first-child {
+      border-color: $accent;
+      color: $primary;
+      font-size: 3.4rem;
+    }
+  }
+}
