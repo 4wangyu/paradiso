@@ -4,10 +4,12 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Videos from "./pages/Videos";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Navbar />
 
       <Switch>
