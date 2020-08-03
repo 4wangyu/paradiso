@@ -6,9 +6,7 @@ function ScrollToTop() {
   const history = useHistory();
 
   useEffect(() => {
-    const unlisten = history.listen((e) => {
-      console.log(e);
-
+    const unlisten = history.listen(() => {
       $("html").animate(
         {
           scrollTop: 0,
