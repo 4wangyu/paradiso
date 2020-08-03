@@ -1,16 +1,10 @@
 .video {
   position: relative;
 
-  .title {
-    @include overflow-hidden;
-    font-size: 1.6rem;
-    padding: 0px 1rem 0.5rem 0px;
-    margin: 0;
-  }
-
-  .meta {
+  .control {
     display: flex;
-    justify-content: flex-end;
+    align-items: flex-start;
+    justify-content: center;
     flex-flow: column nowrap;
     background-color: rgba(0, 0, 0, 0.1);
     position: absolute;
@@ -20,8 +14,11 @@
     top: 0px;
     left: 0px;
 
-    &:hover h3 {
-      opacity: 1;
+    .play {
+      opacity: 0;
+      align-self: center;
+      transition: opacity 250ms ease-in-out 0s;
+      cursor: pointer;
     }
 
     h3 {
@@ -30,6 +27,22 @@
       margin: 0;
       font-size: 2.5rem;
       text-transform: uppercase;
+      bottom: 1rem;
+      position: absolute;
+    }
+
+    &:hover {
+      .play,
+      h3 {
+        opacity: 1;
+      }
     }
   }
+}
+
+.title {
+  @include overflow-hidden;
+  font-size: 1.6rem;
+  padding: 0px 1rem 0.5rem 0px;
+  margin: 0;
 }

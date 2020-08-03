@@ -9,7 +9,7 @@ const Home = () => {
         width={window.innerWidth}
         height={window.innerHeight}
         split={5}
-        hideMeta={true}
+        hideTitle={true}
       />
       <Recent />
     </div>

@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ReactComponent as LeftIcon } from "../icons/left.svg";
+import { ReactComponent as RightIcon } from "../icons/right.svg";
 
 const Pagination = () => {
   return (
     <nav className="pagination">
       <Link to="">First</Link>
       <Link to="">
-        <i className="fa fa-angle-left"></i>
+        <LeftIcon />
       </Link>
       <Link to="" className="number">
         1
@@ -24,7 +26,7 @@ const Pagination = () => {
         5
       </Link>
       <Link to="">
-        <i className="fa fa-angle-right"></i>
+        <RightIcon />
       </Link>
       <Link to="">Last</Link>
     </nav>
