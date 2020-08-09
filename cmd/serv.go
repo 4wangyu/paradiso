@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"runtime"
 	"strconv"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,10 @@ type Files struct {
 	Total int
 }
 
-var db *sql.DB
-var videoPerPage = 12
+var (
+	db           *sql.DB
+	videoPerPage = 12
+)
 
 // servCmd represents the serv command
 var servCmd = &cobra.Command{
@@ -111,8 +114,7 @@ func serveRecent(w http.ResponseWriter, r *http.Request) {
 func serveVideos(w http.ResponseWriter, r *http.Request) {
 	page, err := strconv.Atoi(r.URL.Query().Get("p"))
 	check(err)
-	stmt, err := db.Prepare("SELECT id, name FROM media ORDER BY created DESC LIMIT 12 OFFSET ?")
-	rows, err := stmt.Query(page * videoPerPage)
+	rows, err := db.Query("SELECT id, name FROM media ORDER BY created DESC LIMIT ? OFFSET ?", videoPerPage, page*videoPerPage)
 	check(err)
 	files := make([]File, 0)
 	for rows.Next() {
@@ -128,7 +130,22 @@ func serveVideos(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveSearch(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
+	query := strings.ToLower(r.URL.Query().Get("q"))
+	page, err := strconv.Atoi(r.URL.Query().Get("p"))
+	check(err)
+	rows, err := db.Query("SELECT id, name FROM media WHERE lower(name) like '%' || ? || '%' ORDER by name LIMIT ? OFFSET ?", query, videoPerPage, page*videoPerPage)
+	check(err)
+	files := make([]File, 0)
+	for rows.Next() {
+		var file File
+		rows.Scan(&file.ID, &file.Name)
+		files = append(files, file)
+	}
+	total := getSearchTotal(query)
+
+	data, err := json.Marshal(Files{files, total})
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
 
 func serveFile(w http.ResponseWriter, r *http.Request) {
@@ -137,6 +154,13 @@ func serveFile(w http.ResponseWriter, r *http.Request) {
 
 func getVideosTotal() int {
 	row := db.QueryRow("SELECT count(*) FROM media")
+	var total int
+	row.Scan(&total)
+	return total
+}
+
+func getSearchTotal(query string) int {
+	row := db.QueryRow("SELECT count(*) FROM media WHERE lower(name) like '%' || ? || '%'", query)
 	var total int
 	row.Scan(&total)
 	return total
