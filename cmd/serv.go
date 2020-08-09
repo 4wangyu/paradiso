@@ -18,7 +18,7 @@ import (
 
 // File Type
 type File struct {
-	ID   int
+	ID   string
 	Name string
 }
 
@@ -58,15 +58,10 @@ func serv(dbFile string) {
 	defer db.Close()
 
 	http.HandleFunc("/random", serveRandom)
-
 	http.HandleFunc("/recent", serveRecent)
-
 	http.HandleFunc("/videos", serveVideos)
-
 	http.HandleFunc("/search", serveSearch)
-
 	http.HandleFunc("/file", serveFile)
-
 	http.Handle("/", http.FileServer(http.Dir("web/build")))
 
 	// get free port
@@ -86,6 +81,7 @@ func serv(dbFile string) {
 
 func serveRandom(w http.ResponseWriter, r *http.Request) {
 	row := db.QueryRow("SELECT id, name FROM media ORDER BY RANDOM() LIMIT 1")
+
 	var file File
 	row.Scan(&file.ID, &file.Name)
 
@@ -99,6 +95,7 @@ func serveRandom(w http.ResponseWriter, r *http.Request) {
 func serveRecent(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query("SELECT id, name FROM media WHERE opened IS NOT NULL ORDER BY opened DESC LIMIT 6")
 	check(err)
+
 	files := make([]File, 0)
 	for rows.Next() {
 		var file File
@@ -114,8 +111,10 @@ func serveRecent(w http.ResponseWriter, r *http.Request) {
 func serveVideos(w http.ResponseWriter, r *http.Request) {
 	page, err := strconv.Atoi(r.URL.Query().Get("p"))
 	check(err)
+
 	rows, err := db.Query("SELECT id, name FROM media ORDER BY created DESC LIMIT ? OFFSET ?", videoPerPage, page*videoPerPage)
 	check(err)
+
 	files := make([]File, 0)
 	for rows.Next() {
 		var file File
@@ -133,8 +132,10 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 	query := strings.ToLower(r.URL.Query().Get("q"))
 	page, err := strconv.Atoi(r.URL.Query().Get("p"))
 	check(err)
+
 	rows, err := db.Query("SELECT id, name FROM media WHERE lower(name) like '%' || ? || '%' ORDER by name LIMIT ? OFFSET ?", query, videoPerPage, page*videoPerPage)
 	check(err)
+
 	files := make([]File, 0)
 	for rows.Next() {
 		var file File
