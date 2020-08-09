@@ -61,6 +61,7 @@ func scan(path string, dbFile string) int {
 	defer db.Close()
 
 	total := 0
+	stmt, err := db.Prepare("INSERT INTO media(path, name, created, opened) values(?,?,?,?)")
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		check(err)
 
@@ -70,9 +71,6 @@ func scan(path string, dbFile string) int {
 
 		extension := filepath.Ext(path)
 		if contains([]string{".mp4", ".mkv"}, extension) {
-			stmt, err := db.Prepare("INSERT INTO media(path, name, created, opened) values(?,?,?,?)")
-			check(err)
-
 			_, err = stmt.Exec(path, info.Name(), info.ModTime().Unix(), nil)
 			check(err)
 			total++
