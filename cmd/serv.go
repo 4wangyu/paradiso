@@ -149,7 +149,10 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveFile(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
+	id := r.URL.Query().Get("id")
+	var path string
+	db.QueryRow("SELECT path FROM media WHERE id = ?", id).Scan(&path)
+	http.ServeFile(w, r, path)
 }
 
 func getVideosTotal() int {
