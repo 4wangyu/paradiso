@@ -6,7 +6,9 @@ const Player = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const player = new Plyr(videoRef.current as HTMLVideoElement);
+    const player = new Plyr(videoRef.current as HTMLVideoElement, {
+      autoplay: true,
+    });
     return () => player.destroy();
   });
 
