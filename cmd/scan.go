@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3" // sqlite
 	"github.com/spf13/cobra"
 )
 
@@ -42,7 +42,7 @@ func initDB() string {
 	db, err := sql.Open("sqlite3", f.Name())
 	check(err)
 
-	_, err = db.Exec(`create table media (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, path TEXT NOT NULL, date INTEGER);`)
+	_, err = db.Exec(`create table media (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, path TEXT NOT NULL, opened INTEGER, created INTEGER);`)
 	check(err)
 
 	db.Close()
@@ -70,10 +70,10 @@ func scan(path string, dbFile string) int {
 
 		extension := filepath.Ext(path)
 		if contains([]string{".mp4", ".mkv"}, extension) {
-			stmt, err := db.Prepare("INSERT INTO media(path, name, date) values(?,?,?)")
+			stmt, err := db.Prepare("INSERT INTO media(path, name, created, opened) values(?,?,?,?)")
 			check(err)
 
-			_, err = stmt.Exec(path, info.Name(), info.ModTime().Unix())
+			_, err = stmt.Exec(path, info.Name(), info.ModTime().Unix(), nil)
 			check(err)
 			total++
 		}
