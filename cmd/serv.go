@@ -25,14 +25,10 @@ func init() {
 	rootCmd.AddCommand(servCmd)
 }
 
-func serveHTTP(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
-}
-
 func up() {
 	http.HandleFunc("/random", serveHTTP)
 
-	http.Handle("/", http.FileServer(http.Dir("client/build")))
+	http.Handle("/", http.FileServer(http.Dir("web/build")))
 
 	// get free port
 	listener, err := net.Listen("tcp", ":0")
@@ -46,6 +42,10 @@ func up() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+}
+
+func serveHTTP(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
 }
 
 func openBrowser(url string) {
