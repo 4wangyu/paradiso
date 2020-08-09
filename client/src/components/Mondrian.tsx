@@ -107,31 +107,29 @@ const Mondrian = ({ width, height, split }: PropType) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-    if (canvas && context) {
-      canvas.width = width;
-      canvas.height = height;
-      context.lineWidth = 5;
-      context.strokeStyle = "#131112";
+    canvas.width = width;
+    canvas.height = height;
+    context.lineWidth = 5;
+    context.strokeStyle = "#131112";
 
-      const size = Math.max(width, height);
-      const step = size / split;
-      squares = [];
-      squares.push({
-        x: 0,
-        y: 0,
-        width,
-        height,
-      });
-      for (let i = 0; i < size; i += step) {
-        splitSquaresWith({ y: i } as Square);
-        splitSquaresWith({ x: i } as Square);
-      }
-
-      draw(context);
+    const size = Math.max(width, height);
+    const step = size / split;
+    squares = [];
+    squares.push({
+      x: 0,
+      y: 0,
+      width,
+      height,
+    });
+    for (let i = 0; i < size; i += step) {
+      splitSquaresWith({ y: i } as Square);
+      splitSquaresWith({ x: i } as Square);
     }
+
+    draw(context);
   });
 
   return <canvas ref={canvasRef} />;
