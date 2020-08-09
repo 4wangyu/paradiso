@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -20,7 +21,14 @@ type File struct {
 	Name string
 }
 
+// Files Type
+type Files struct {
+	Files []File
+	Total int
+}
+
 var db *sql.DB
+var videoPerPage = 12
 
 // servCmd represents the serv command
 var servCmd = &cobra.Command{
@@ -65,7 +73,7 @@ func serv(dbFile string) {
 	url := fmt.Sprintf("%s:%d", "http://localhost", listener.Addr().(*net.TCPAddr).Port)
 
 	fmt.Println("Serving at", url)
-	openBrowser(url)
+	// openBrowser(url)
 
 	err = http.Serve(listener, nil)
 	if err != nil {
@@ -101,7 +109,22 @@ func serveRecent(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveVideos(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
+	page, err := strconv.Atoi(r.URL.Query().Get("p"))
+	check(err)
+	stmt, err := db.Prepare("SELECT id, name FROM media ORDER BY created DESC LIMIT 12 OFFSET ?")
+	rows, err := stmt.Query(page * videoPerPage)
+	check(err)
+	files := make([]File, 0)
+	for rows.Next() {
+		var file File
+		rows.Scan(&file.ID, &file.Name)
+		files = append(files, file)
+	}
+	total := getVideosTotal()
+
+	data, err := json.Marshal(Files{files, total})
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
 
 func serveSearch(w http.ResponseWriter, r *http.Request) {
@@ -110,6 +133,13 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 
 func serveFile(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
+}
+
+func getVideosTotal() int {
+	row := db.QueryRow("SELECT count(*) FROM media")
+	var total int
+	row.Scan(&total)
+	return total
 }
 
 func openBrowser(url string) {
