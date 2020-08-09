@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Videos from "./pages/Videos";
 import ScrollToTop from "./components/ScrollToTop";
+import Player from "./components/Player";
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
       <Navbar />
 
       <Switch>
+        <Route path="/random">
+          <Player />
+        </Route>
         <Route path="/videos">
           <Videos />
         </Route>
