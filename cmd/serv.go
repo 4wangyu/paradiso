@@ -76,16 +76,28 @@ func serv(dbFile string) {
 func serveRandom(w http.ResponseWriter, r *http.Request) {
 	row := db.QueryRow("SELECT id, name FROM media ORDER BY RANDOM() LIMIT 1")
 	var file File
-	err := row.Scan(&file.ID, &file.Name)
-	check(err)
+	row.Scan(&file.ID, &file.Name)
 
 	data, err := json.Marshal(file)
+	check(err)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }
 
 func serveRecent(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "/Volumes/Seagate/Video/4 Star/Movie/America/1999，大开眼戒Eyes.Wide.Shut.1999.BD.MiniSD-TLF.mkv")
+	rows, err := db.Query("SELECT id, name FROM media WHERE opened IS NOT NULL ORDER BY opened DESC LIMIT 6")
+	check(err)
+	files := make([]File, 0)
+	for rows.Next() {
+		var file File
+		rows.Scan(&file.ID, &file.Name)
+		files = append(files, file)
+	}
+
+	data, err := json.Marshal(files)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
 
 func serveVideos(w http.ResponseWriter, r *http.Request) {
