@@ -155,6 +155,7 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 
 func serveFile(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
+	defer db.Exec("UPDATE media SET opened = CURRENT_TIMESTAMP WHERE id = ?", id)
 	var path string
 	db.QueryRow("SELECT path FROM media WHERE id = ?", id).Scan(&path)
 	http.ServeFile(w, r, path)

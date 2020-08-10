@@ -43,7 +43,7 @@ func initDB() string {
 	db, err := sql.Open("sqlite3", f.Name())
 	check(err)
 
-	_, err = db.Exec(`create table media (id TEXT PRIMARY KEY, name TEXT NOT NULL, path TEXT NOT NULL, opened INTEGER, created INTEGER);`)
+	_, err = db.Exec(`create table media (id TEXT PRIMARY KEY, name TEXT NOT NULL, path TEXT NOT NULL, opened TEXT, created INTEGER);`)
 	check(err)
 
 	db.Close()
