@@ -4,6 +4,7 @@ import { ReactComponent as LeftIcon } from "../icons/left.svg";
 import { ReactComponent as RightIcon } from "../icons/right.svg";
 import { PaginationType } from "../models/model";
 import classNames from "classnames";
+import { useQuery } from "../utils/util";
 
 const videoPerPage = 12;
 
@@ -15,6 +16,7 @@ interface PropType {
 const Pagination = ({ total = 0, current = 1 }: PropType) => {
   const [pagination, setPagination] = useState<PaginationType>();
   const { url } = useRouteMatch();
+  const query = useQuery().get("q") || "";
 
   useEffect(() => {
     const last = Math.ceil((total * 1.0) / videoPerPage);
@@ -42,17 +44,21 @@ const Pagination = ({ total = 0, current = 1 }: PropType) => {
     setPagination({ last, prev, next, links });
   }, [total, current]);
 
+  const getUrl = (p: number | undefined): string => {
+    return `${url}?${query && "q=" + query + "&"}p=${p}`;
+  };
+
   return (
     <nav className="pagination">
       <NavLink to={url} isActive={() => current > 1}>
         First
       </NavLink>
-      <NavLink to={`${url}?p=${pagination?.prev}`} isActive={() => current > 1}>
+      <NavLink to={getUrl(pagination?.prev)} isActive={() => current > 1}>
         <LeftIcon />
       </NavLink>
       {pagination?.links.map((link) => (
         <NavLink
-          to={`${url}?p=${link.page}`}
+          to={getUrl(link.page)}
           key={link.page}
           className={classNames({
             number: true,
@@ -63,13 +69,13 @@ const Pagination = ({ total = 0, current = 1 }: PropType) => {
         </NavLink>
       ))}
       <NavLink
-        to={`${url}?p=${pagination?.next}`}
+        to={getUrl(pagination?.next)}
         isActive={() => !!pagination?.last && current < pagination?.last}
       >
         <RightIcon />
       </NavLink>
       <NavLink
-        to={`${url}?p=${pagination?.last}`}
+        to={getUrl(pagination?.last)}
         isActive={() => !!pagination?.last && current < pagination?.last}
       >
         Last
