@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/google/uuid v1.1.1
-	github.com/karalabe/xgo v0.0.0-20191115072854-c5ccff8648a7 // indirect
+	// github.com/karalabe/xgo v0.0.0-20191115072854-c5ccff8648a7 // indirect
 	github.com/mattn/go-sqlite3 v1.14.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
