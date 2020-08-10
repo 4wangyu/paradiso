@@ -75,9 +75,6 @@ func serv(dbFile string) {
 	http.HandleFunc("/api/search", serveSearch)
 	http.HandleFunc("/api/file", serveFile)
 	http.Handle("/", http.FileServer(&spaFileSystem{http.Dir("web/build")}))
-	http.HandleFunc("*", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "web/build/index.html")
-	})
 
 	// get free port
 	listener, err := net.Listen("tcp", ":0")
