@@ -3,10 +3,17 @@ import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 import { ReactComponent as LeftIcon } from "../icons/left.svg";
 import classNames from "classnames";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 
-const id = "dddef4f7-d9cc-4b0e-8aba-149c3d4f4f6f";
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Player = () => {
+  const { id } = useParams();
+  let name = useQuery().get("name");
+  let history = useHistory();
+
   const [controlsshown, setControlsshown] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -27,10 +34,10 @@ const Player = () => {
   return (
     <div className="player">
       <div className={headerClass}>
-        <button>
+        <button onClick={history.goBack}>
           <LeftIcon />
         </button>
-        <h1>Title</h1>
+        <h1>{name}</h1>
         <button></button>
       </div>
       <video ref={videoRef}>

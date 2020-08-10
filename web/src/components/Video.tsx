@@ -2,6 +2,7 @@ import React from "react";
 import Mondrian from "./Mondrian";
 import { ReactComponent as PlayIcon } from "../icons/play.svg";
 import { VideoFile } from "../models/model";
+import { Link } from "react-router-dom";
 
 const goldenRatio = 0.618;
 // window width subtracted by paddings then divided by 3
@@ -29,12 +30,15 @@ const Video = ({
       <div className="video">
         <Mondrian width={width} height={height} split={split} />
         <div className="control">
-          <div className="play">
+          <Link
+            to={`/${videoFile?.id}?name=${videoFile?.name}`}
+            className="play"
+          >
             <PlayIcon
               width={hideTitle ? "11.7rem" : "7.4rem"}
               height={hideTitle ? "11.7rem" : "7.4rem"}
             />
-          </div>
+          </Link>
           {hideTitle && <h3>{videoFile?.name}</h3>}
         </div>
       </div>

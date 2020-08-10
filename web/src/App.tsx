@@ -14,14 +14,14 @@ function App() {
       <Navbar />
 
       <Switch>
-        <Route path="/random">
-          <Player />
-        </Route>
         <Route path="/videos">
           <Videos />
         </Route>
         <Route path="/search">
           <Search />
+        </Route>
+        <Route path="/:id">
+          <Player />
         </Route>
         <Route path="/">
           <Home />
