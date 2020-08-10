@@ -1,0 +1,49 @@
+.player {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+
+  .header {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    transition: transform 0.4s ease-in-out;
+    transform: translateY(-7rem);
+
+    &.controlsshown,
+    &:hover {
+      transform: unset;
+    }
+
+    button {
+      background: transparent;
+      width: 3.2rem;
+      height: 3.2rem;
+      border: none;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        background: $primary;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      svg {
+        fill: white;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+}
