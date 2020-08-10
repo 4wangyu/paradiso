@@ -1,36 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Recent from "../components/Recent";
 import Video from "../components/Video";
 import axios from "axios";
-
-const call = () => {
-  axios
-    .get("/random")
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    });
-};
+import { handleError } from "../utils/util";
+import { VideoFile } from "../models/model";
 
 const Home = () => {
+  const [randomVideo, setRandomVideo] = useState<VideoFile>();
+
   useEffect(() => {
-    call();
+    axios
+      .get("http://localhost:9000/random")
+      .then((res) => {
+        setRandomVideo(res.data);
+      })
+      .catch(handleError);
   }, []);
 
   return (
     <div>
       <Video
+        videoFile={randomVideo as VideoFile}
         width={window.innerWidth}
         height={window.innerHeight}
         split={5}
         hideTitle={true}
       />
       <Recent />
-      <button onClick={call}></button>
     </div>
   );
 };

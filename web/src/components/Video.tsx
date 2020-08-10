@@ -1,6 +1,7 @@
 import React from "react";
 import Mondrian from "./Mondrian";
 import { ReactComponent as PlayIcon } from "../icons/play.svg";
+import { VideoFile } from "../models/model";
 
 const goldenRatio = 0.618;
 // window width subtracted by paddings then divided by 3
@@ -13,9 +14,11 @@ export interface PropType {
   height?: number;
   split?: number;
   hideTitle?: boolean;
+  videoFile?: VideoFile;
 }
 
 const Video = ({
+  videoFile,
   width = defaultWidth,
   height = defaultHeight,
   split = defaultSplit,
@@ -32,20 +35,13 @@ const Video = ({
               height={hideTitle ? "11.7rem" : "7.4rem"}
             />
           </div>
-          {hideTitle && (
-            <h3>
-              Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get
-              Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get
-              Cozy Get Cozy
-            </h3>
-          )}
+          {hideTitle && <h3>{videoFile?.name}</h3>}
         </div>
       </div>
 
       {hideTitle || (
         <h3 className="title" style={{ width }}>
-          Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get Cozy Get
-          Cozy
+          {videoFile?.name}
         </h3>
       )}
     </div>
