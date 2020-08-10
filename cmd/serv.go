@@ -114,7 +114,7 @@ func serveVideos(w http.ResponseWriter, r *http.Request) {
 	page, err := strconv.Atoi(r.URL.Query().Get("p"))
 	check(err)
 
-	rows, err := db.Query("SELECT id, name FROM media ORDER BY created DESC LIMIT ? OFFSET ?", videoPerPage, page*videoPerPage)
+	rows, err := db.Query("SELECT id, name FROM media ORDER BY created DESC LIMIT ? OFFSET ?", videoPerPage, (page-1)*videoPerPage)
 	check(err)
 
 	files := make([]File, 0)
@@ -136,7 +136,7 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 	page, err := strconv.Atoi(r.URL.Query().Get("p"))
 	check(err)
 
-	rows, err := db.Query("SELECT id, name FROM media WHERE lower(name) like '%' || ? || '%' ORDER by name LIMIT ? OFFSET ?", query, videoPerPage, page*videoPerPage)
+	rows, err := db.Query("SELECT id, name FROM media WHERE lower(name) like '%' || ? || '%' ORDER by name LIMIT ? OFFSET ?", query, videoPerPage, (page-1)*videoPerPage)
 	check(err)
 
 	files := make([]File, 0)
