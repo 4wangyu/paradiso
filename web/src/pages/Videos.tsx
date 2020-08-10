@@ -22,7 +22,9 @@ const Videos = () => {
     <div className="videos">
       <h2>Latest Videos</h2>
       <Grid videoFiles={videos?.files}></Grid>
-      <Pagination total={videos?.total} current={page}></Pagination>
+      {!!videos?.total && (
+        <Pagination total={videos?.total} current={page}></Pagination>
+      )}
     </div>
   );
 };

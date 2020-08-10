@@ -130,7 +130,7 @@ const Mondrian = ({ width, height, split }: PropType) => {
     }
 
     draw(context);
-  });
+  }, [width, height, split]);
 
   return <canvas ref={canvasRef} />;
 };
