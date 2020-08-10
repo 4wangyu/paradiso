@@ -28,6 +28,18 @@ type Files struct {
 	Total int    `json:"total"`
 }
 
+type spaFileSystem struct {
+	root http.FileSystem
+}
+
+func (fs *spaFileSystem) Open(name string) (http.File, error) {
+	f, err := fs.root.Open(name)
+	if os.IsNotExist(err) {
+		return fs.root.Open("index.html")
+	}
+	return f, err
+}
+
 var (
 	db           *sql.DB
 	videoPerPage = 12
@@ -57,12 +69,15 @@ func serv(dbFile string) {
 	check(err)
 	defer db.Close()
 
-	http.HandleFunc("/random", serveRandom)
-	http.HandleFunc("/recent", serveRecent)
-	http.HandleFunc("/videos", serveVideos)
-	http.HandleFunc("/search", serveSearch)
-	http.HandleFunc("/file", serveFile)
-	http.Handle("/", http.FileServer(http.Dir("web/build")))
+	http.HandleFunc("/api/random", serveRandom)
+	http.HandleFunc("/api/recent", serveRecent)
+	http.HandleFunc("/api/videos", serveVideos)
+	http.HandleFunc("/api/search", serveSearch)
+	http.HandleFunc("/api/file", serveFile)
+	http.Handle("/", http.FileServer(&spaFileSystem{http.Dir("web/build")}))
+	http.HandleFunc("*", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "web/build/index.html")
+	})
 
 	// get free port
 	listener, err := net.Listen("tcp", ":0")

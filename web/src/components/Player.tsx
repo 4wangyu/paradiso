@@ -38,7 +38,7 @@ const Player = () => {
         <button></button>
       </div>
       <video ref={videoRef}>
-        <source src={`/file?id=${id}`} />
+        <source src={`/api/file?id=${id}`} />
       </video>
     </div>
   );

@@ -15,7 +15,7 @@ const Search = () => {
 
   useEffect(() => {
     axios
-      .get<VideoFiles>(`/search?p=${page}&q=${query}`)
+      .get<VideoFiles>(`/api/search?p=${page}&q=${query}`)
       .then((res) => {
         setVideos(res.data);
       })

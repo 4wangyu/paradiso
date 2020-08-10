@@ -9,7 +9,7 @@ const Recent = () => {
 
   useEffect(() => {
     axios
-      .get<VideoFile[]>("/recent")
+      .get<VideoFile[]>("/api/recent")
       .then((res) => {
         setRecentVideos(res.data);
       })
