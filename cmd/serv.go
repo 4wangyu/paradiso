@@ -18,14 +18,14 @@ import (
 
 // File Type
 type File struct {
-	ID   string
-	Name string
+	ID   string `json:"id"`
+	Name string `json:"name"`
 }
 
 // Files Type
 type Files struct {
-	Files []File
-	Total int
+	Files []File `json:"files"`
+	Total int    `json:"total"`
 }
 
 var (
@@ -89,6 +89,7 @@ func serveRandom(w http.ResponseWriter, r *http.Request) {
 	check(err)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
@@ -105,6 +106,7 @@ func serveRecent(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(files)
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
@@ -125,6 +127,7 @@ func serveVideos(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(Files{files, total})
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
@@ -146,6 +149,7 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(Files{files, total})
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
