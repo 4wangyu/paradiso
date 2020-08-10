@@ -1,4 +1,6 @@
 .DS_Store
 
 *.db
-tmp
+dist/
+dist.zip
+
