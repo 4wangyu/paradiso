@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import classNames from "classnames";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { ReactComponent as LeftIcon } from "../icons/left.svg";
-import classNames from "classnames";
-import { useParams, useLocation, useHistory } from "react-router-dom";
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import { useQuery } from "../utils/util";
 
 const Player = () => {
   const { id } = useParams();
-  let name = useQuery().get("name");
-  let history = useHistory();
+  const name = useQuery().get("name");
+  const history = useHistory();
 
   const [controlsshown, setControlsshown] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);

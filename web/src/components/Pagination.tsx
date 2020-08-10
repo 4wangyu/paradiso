@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { ReactComponent as LeftIcon } from "../icons/left.svg";
 import { ReactComponent as RightIcon } from "../icons/right.svg";
 
-const Pagination = () => {
+export interface PropType {
+  total?: number;
+}
+
+const Pagination = ({ total }: PropType) => {
   return (
     <nav className="pagination">
       <Link to="">First</Link>
