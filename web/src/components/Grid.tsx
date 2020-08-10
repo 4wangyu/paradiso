@@ -2,7 +2,7 @@ import React from "react";
 import Video from "./Video";
 import { VideoFile } from "../models/model";
 
-export interface PropType {
+interface PropType {
   videoFiles?: VideoFile[];
 }
 

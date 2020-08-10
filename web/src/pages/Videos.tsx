@@ -7,7 +7,7 @@ import { handleError, useQuery } from "../utils/util";
 
 const Videos = () => {
   const [videos, setVideos] = useState<VideoFiles>();
-  const page = useQuery().get("p") || 0;
+  const page = +(useQuery().get("p") || 1);
 
   useEffect(() => {
     axios
@@ -22,7 +22,7 @@ const Videos = () => {
     <div className="videos">
       <h2>Latest Videos</h2>
       <Grid videoFiles={videos?.files}></Grid>
-      <Pagination total={videos?.total}></Pagination>
+      <Pagination total={videos?.total} current={page}></Pagination>
     </div>
   );
 };

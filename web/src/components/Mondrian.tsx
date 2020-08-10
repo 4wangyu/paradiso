@@ -94,7 +94,7 @@ function draw(context: CanvasRenderingContext2D) {
   }
 }
 
-export interface PropType {
+interface PropType {
   width: number;
   height: number;
   split: number;

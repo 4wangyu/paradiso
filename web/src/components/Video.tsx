@@ -10,7 +10,7 @@ const defaultWidth = (window.innerWidth - 20) / 3;
 const defaultHeight = defaultWidth * goldenRatio;
 const defaultSplit = 3;
 
-export interface PropType {
+interface PropType {
   width?: number;
   height?: number;
   split?: number;
