@@ -10,7 +10,7 @@ const Grid = ({ videoFiles = [] }: PropType) => {
   return (
     <div className="grid">
       {videoFiles.map((videoFile) => (
-        <Video videoFile={videoFile}></Video>
+        <Video key={videoFile.id} videoFile={videoFile}></Video>
       ))}
     </div>
   );
