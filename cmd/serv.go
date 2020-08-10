@@ -65,13 +65,12 @@ func serv(dbFile string) {
 	http.Handle("/", http.FileServer(http.Dir("web/build")))
 
 	// get free port
-	// listener, err := net.Listen("tcp", ":0")
-	listener, err := net.Listen("tcp", ":9000")
+	listener, err := net.Listen("tcp", ":0")
 	check(err)
 	url := fmt.Sprintf("%s:%d", "http://localhost", listener.Addr().(*net.TCPAddr).Port)
 
 	fmt.Println("Serving at", url)
-	// openBrowser(url)
+	openBrowser(url)
 
 	err = http.Serve(listener, nil)
 	if err != nil {
@@ -89,7 +88,6 @@ func serveRandom(w http.ResponseWriter, r *http.Request) {
 	check(err)
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
@@ -106,7 +104,6 @@ func serveRecent(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(files)
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
@@ -127,7 +124,6 @@ func serveVideos(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(Files{files, total})
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 
@@ -149,7 +145,6 @@ func serveSearch(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(Files{files, total})
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(data)
 }
 

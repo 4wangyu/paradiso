@@ -11,7 +11,7 @@ const Videos = () => {
 
   useEffect(() => {
     axios
-      .get<VideoFiles>(`http://localhost:9000/videos?p=${page}`)
+      .get<VideoFiles>(`/videos?p=${page}`)
       .then((res) => {
         setVideos(res.data);
       })

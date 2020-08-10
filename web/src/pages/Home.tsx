@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get<VideoFile>("http://localhost:9000/random")
+      .get<VideoFile>("/random")
       .then((res) => {
         setRandomVideo(res.data);
       })
