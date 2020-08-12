@@ -1,2 +1,2 @@
 # tricks github to mistake tsx as go
-*.tsx linguist-language=Go
+*.tsx linguist-language=React
